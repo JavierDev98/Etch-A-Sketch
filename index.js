@@ -105,12 +105,17 @@ function squareMaker() {
         let square = document.createElement("div");
         square.classList.add("square");
         square.style.border = "1px solid black";
+        square.addEventListener("click",drawSquares);
         sketch.appendChild(square);
     }
     sketch.setAttribute("style", `align-self: center; background-color: white; height: 50rem; width: 50rem; display:grid; 
       grid-template-columns: repeat(${chosenSize}, 1fr);  grid-template-rows: repeat(${chosenSize}, 1fr);`);
 }
 
-function drawSquares() {
-   
+function drawSquares(square) {
+  this.setAttribute("style","background-color: black");
+}
+
+function eraser() {
+    this.setAttribute("style","background-color: white");
 }
