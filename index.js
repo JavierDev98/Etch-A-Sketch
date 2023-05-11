@@ -1,29 +1,30 @@
 /*********************************************DOM CREATION************************************************************** */
 //Creates elements to populate the DOM
-let body = document.querySelector("body");
+const body = document.querySelector("body");
 body.style.margin = 0;
 body.style.height = "100%";
+
 //Used for title of the project
-let header = document.createElement("div");
+const header = document.createElement("div");
 header.classList.add("header");
 header.setAttribute("style", "display: grid; background-color: #121212; border-bottom: 1px solid grey");
 body.appendChild(header);
 
-let title = document.createElement("h1");
+const title = document.createElement("h1");
 title.textContent = "Etch-A-Sketch";
 title.setAttribute("style", "font-family: 'Crimson Text', serif; text-align: center; color: white");
 header.appendChild(title);
 
 //Container stores leftMenu and rightSide
 
-let container = document.createElement("div");
+const container = document.createElement("div");
 container.classList.add("container");
 container.setAttribute("style", "display: grid; grid-template-columns: 1.5fr 5fr;");
 body.appendChild(container);
 
 let leftMenu = document.createElement("div");
 leftMenu.classList.add("leftMenu");
-leftMenu.setAttribute("style", "background-color: #121212; height: 91vh;border-right: 1px solid grey;");
+leftMenu.setAttribute("style", "display: flex; flex-direction: column; gap: 3rem;background: linear-gradient(to left, #33ccff 0%, #ff99cc 100%); height: 91vh;border-right: 1px solid grey;");
 container.appendChild(leftMenu);
 
 //Form for sizes
@@ -49,7 +50,7 @@ select.setAttribute("name", "select");
 sizeOptions.appendChild(select);
 
 let subgroup1 = document.createElement("optgroup");
-subgroup1.setAttribute("label", "Small");
+subgroup1.setAttribute("label", "Big");
 select.appendChild(subgroup1);
 
 let option1 = document.createElement("option");
@@ -67,7 +68,7 @@ option2.innerText = "32 x 32";
 select.appendChild(option2);
 
 let subgroup3 = document.createElement("optgroup");
-subgroup3.setAttribute("label", "Big");
+subgroup3.setAttribute("label", "Small");
 select.appendChild(subgroup3);
 
 let option3 = document.createElement("option");
@@ -80,22 +81,38 @@ submit.classList.add("submit");
 submit.setAttribute("type","submit");
 submit.setAttribute("value","Let's go!");
 submit.addEventListener("click",squareMaker);
-
 sizeOptions.appendChild(submit);
 
-let valueSubmit = document.createElement("input").value;
+
 //This part is for the actual drawing board
 
 let rightSide = document.createElement("div");
 rightSide.classList.add("rightSide");
-rightSide.setAttribute("style", "background-color: #121212; height: 91vh; display: flex; justify-content: center; overflow: hidden;");
+rightSide.setAttribute("style", "background: linear-gradient(to right, #33ccff 0%, #ff99cc 100%); height: 91vh; display: flex; justify-content: center; overflow: hidden;");
 container.appendChild(rightSide);
 
 let sketch = document.createElement("div");
 sketch.classList.add("sketch");
+sketch.setAttribute("style", `align-self: center; background-color: white; height: 50rem; width: 50rem; display:grid; 
+grid-template-columns: repeat(16, 1fr);  grid-template-rows: repeat(16, 1fr);`);
+
 rightSide.appendChild(sketch);
 
 /*********************************************Scripting!************************************************************** */
+
+//Choose which color you want to use
+let inputColor = document.createElement("input");
+inputColor.setAttribute("type","color");
+inputColor.setAttribute("style","align-self: center; margin: 1rem; border:");
+leftMenu.appendChild(inputColor);
+let chosenColor;
+
+let someText = document.createElement("h3");
+someText.innerHTML = "This was made by <a href='https://github.com/JavierDev98/' target=_blank>JavierDev98</a>"
+someText.setAttribute("style","align-self: center; margin-top: 35rem;");
+leftMenu.appendChild(someText);
+
+
 
 function squareMaker() {
     sketch.innerHTML = ""; // Every time this line is run, it deletes the whole HTML inside the sketch div.
@@ -107,15 +124,21 @@ function squareMaker() {
         square.style.border = "1px solid black";
         square.addEventListener("click",drawSquares);
         sketch.appendChild(square);
+        
     }
     sketch.setAttribute("style", `align-self: center; background-color: white; height: 50rem; width: 50rem; display:grid; 
       grid-template-columns: repeat(${chosenSize}, 1fr);  grid-template-rows: repeat(${chosenSize}, 1fr);`);
+      
 }
 
 function drawSquares(square) {
-  this.setAttribute("style","background-color: black");
+  chosenColor = inputColor.value;
+  this.setAttribute("style",`border: 1px solid black; background-color:${chosenColor}`);
+  checkWhetherBlank(square);
 }
 
-function eraser() {
-    this.setAttribute("style","background-color: white");
-}
+
+
+
+
+
